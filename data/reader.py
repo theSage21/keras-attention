@@ -33,7 +33,7 @@ class Vocabulary(object):
 
     def string_to_int(self, text):
         """
-            Converts a string into it's character integer 
+            Converts a string into it's character integer
             representation
             :param text: text to convert
         """
@@ -52,7 +52,6 @@ class Vocabulary(object):
                 integers.append(self.vocabulary[c])
             else:
                 integers.append(self.vocabulary['<unk>'])
-
 
         # pad:
         if self.padding and len(integers) < self.padding:
@@ -84,7 +83,7 @@ class Data(object):
             :param file_name: name of the file to read from
             :param vocabulary: the Vocabulary object to use
             :param batch_size: the number of datapoints to return
-            :param padding: the amount of padding to apply to 
+            :param padding: the amount of padding to apply to
                             a short string
         """
 
@@ -120,8 +119,8 @@ class Data(object):
                     num_classes=self.output_vocabulary.size()),
                 self.targets)))
 
-        assert len(self.inputs.shape) == 2, 'Inputs could not properly be encoded'
-        assert len(self.targets.shape) == 3, 'Targets could not properly be encoded'
+        assert len(self.inputs.shape) == 2, 'Inputs couldnt be encoded'
+        assert len(self.targets.shape) == 3, 'Targets couldnt be encoded'
 
     def generator(self, batch_size):
         """
@@ -140,6 +139,7 @@ class Data(object):
                 print(e)
                 yield None, None
 
+
 if __name__ == '__main__':
     input_vocab = Vocabulary('./human_vocab.json', padding=50)
     output_vocab = Vocabulary('./machine_vocab.json', padding=12)
@@ -149,8 +149,8 @@ if __name__ == '__main__':
     print(ds.inputs.shape)
     print(ds.targets.shape)
     g = ds.generator(32)
-    print(ds.inputs[[5,10, 12]].shape)
-    print(ds.targets[[5,10,12]].shape)
+    print(ds.inputs[[5, 10, 12]].shape)
+    print(ds.targets[[5, 10, 12]].shape)
     # for i in range(50):
     #     print(next(g)[0].shape)
     #     print(next(g)[1].shape)

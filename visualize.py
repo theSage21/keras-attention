@@ -3,7 +3,6 @@ import os
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
 from models.NMT import simpleNMT
 from utils.examples import run_example
@@ -13,6 +12,7 @@ from data.reader import Vocabulary
 def load_examples(file_name):
     with open(file_name) as f:
         return [s.replace('\n', '') for s in f.readlines()]
+
 
 # create a directory if it doesn't already exist
 if not os.path.exists('./attention_maps/'):
@@ -67,7 +67,7 @@ class Visualizer(object):
 
         # add image
         i = ax.imshow(activation_map, interpolation='nearest', cmap='gray')
-        
+
         # add colorbar
         cbaxes = f.add_axes([0.2, 0, 0.6, 0.03])
         cbar = f.colorbar(i, cax=cbaxes, orientation='horizontal')
@@ -76,10 +76,10 @@ class Visualizer(object):
         # add labels
         ax.set_yticks(range(output_length))
         ax.set_yticklabels(predicted_text[:output_length])
-        
+
         ax.set_xticks(range(input_length))
         ax.set_xticklabels(text_[:input_length], rotation=45)
-        
+
         ax.set_xlabel('Input Sequence')
         ax.set_ylabel('Output Sequence')
 
@@ -87,8 +87,10 @@ class Visualizer(object):
         ax.grid()
         # ax.legend(loc='best')
 
-        f.savefig('./attention_maps/'+text.replace('/', '')+'.pdf', bbox_inches='tight')
+        f.savefig('./attention_maps/'+text.replace('/', '')+'.pdf',
+                  bbox_inches='tight')
         f.show()
+
 
 def main(examples, args):
     print('Total Number of Examples:', len(examples))

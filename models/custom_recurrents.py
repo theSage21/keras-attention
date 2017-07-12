@@ -4,7 +4,10 @@ from keras import regularizers, constraints, initializers, activations
 from keras.layers.recurrent import Recurrent, _time_distributed_dense
 from keras.engine import InputSpec
 
-tfPrint = lambda d, T: tf.Print(input_=T, data=[T, tf.shape(T)], message=d)
+
+def tfPrint(d, T):
+    return tf.Print(input_=T, data=[T, tf.shape(T)], message=d)
+
 
 class AttentionDecoder(Recurrent):
 
@@ -23,13 +26,14 @@ class AttentionDecoder(Recurrent):
                  **kwargs):
         """
         Implements an AttentionDecoder that takes in a sequence encoded by an
-        encoder and outputs the decoded states 
+        encoder and outputs the decoded states
         :param units: dimension of the hidden state and the attention matrices
         :param output_dim: the number of labels in the output space
 
         references:
-            Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. 
-            "Neural machine translation by jointly learning to align and translate." 
+            Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio.
+            "Neural machine translation by jointly learning to align and
+            translate."
             arXiv preprint arXiv:1409.0473 (2014).
         """
         self.units = units
@@ -303,13 +307,15 @@ class AttentionDecoder(Recurrent):
         base_config = super(AttentionDecoder, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
 
+
 # check to see if it compiles
 if __name__ == '__main__':
     from keras.layers import Input, LSTM
     from keras.models import Model
     from keras.layers.wrappers import Bidirectional
-    i = Input(shape=(100,104), dtype='float32')
-    enc = Bidirectional(LSTM(64, return_sequences=True), merge_mode='concat')(i)
+    i = Input(shape=(100, 104), dtype='float32')
+    enc = Bidirectional(LSTM(64, return_sequences=True),
+                        merge_mode='concat')(i)
     dec = AttentionDecoder(32, 4)(enc)
     model = Model(inputs=i, outputs=dec)
     model.summary()

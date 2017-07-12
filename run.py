@@ -60,14 +60,15 @@ def main(args):
     print('Training. Ctrl+C to end early.')
 
     try:
-        model.fit_generator(generator=training.generator(args.batch_size),
-                            steps_per_epoch=100,
-                            validation_data=validation.generator(args.batch_size),
-                            validation_steps=100,
-                            callbacks=[cp],
-                            workers=1,
-                            verbose=1,
-                            epochs=args.epochs)
+        kwargs = dict(generator=training.generator(args.batch_size),
+                      steps_per_epoch=100,
+                      validation_data=validation.generator(args.batch_size),
+                      validation_steps=100,
+                      callbacks=[cp],
+                      workers=1,
+                      verbose=1,
+                      epochs=args.epochs)
+        model.fit_generator(**kwargs)
 
     except KeyboardInterrupt as e:
         print('Model training stopped early.')
@@ -75,6 +76,7 @@ def main(args):
     print('Model training complete.')
 
     run_examples(model, input_vocab, output_vocab)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

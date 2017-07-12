@@ -45,8 +45,8 @@ LOCALES = babel.localedata.locale_identifiers()
 
 def create_date():
     """
-        Creates some fake dates 
-        :returns: tuple containing 
+        Creates some fake dates
+        :returns: tuple containing
                   1. human formatted string
                   2. machine formatted string
                   3. date object.
@@ -60,7 +60,7 @@ def create_date():
                             format=random.choice(FORMATS),
                             locale=random.choice(LOCALES))
 
-        case_change = random.randint(0,3) # 1/2 chance of case change
+        case_change = random.randint(0, 3)  # 1/2 chance of case change
         if case_change == 1:
             human = human.upper()
         elif case_change == 2:
@@ -97,8 +97,8 @@ def create_dataset(dataset_name, n_examples, vocabulary=False):
         int2human.update({len(int2human): '<unk>',
                           len(int2human)+1: '<eot>'})
         int2machine = dict(enumerate(machine_vocab))
-        int2machine.update({len(int2machine):'<unk>',
-                            len(int2machine)+1:'<eot>'})
+        int2machine.update({len(int2machine): '<unk>',
+                            len(int2machine)+1: '<eot>'})
 
         human2int = {v: k for k, v in int2human.items()}
         machine2int = {v: k for k, v in int2machine.items()}
@@ -107,6 +107,7 @@ def create_dataset(dataset_name, n_examples, vocabulary=False):
             json.dump(human2int, f)
         with open('./machine_vocab.json', 'w') as f:
             json.dump(machine2int, f)
+
 
 if __name__ == '__main__':
     print('creating dataset')
