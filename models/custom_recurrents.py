@@ -316,6 +316,6 @@ if __name__ == '__main__':
     i = Input(shape=(100, 104), dtype='float32')
     enc = Bidirectional(LSTM(64, return_sequences=True),
                         merge_mode='concat')(i)
-    dec = AttentionDecoder(32, 4)(enc)
+    dec = AttentionDecoder(32, 4, return_probabilities=True)(enc)
     model = Model(inputs=i, outputs=dec)
     model.summary()
